@@ -61,7 +61,9 @@ function adicionarItem(novoItem) {
     })
     .then(response => {
         if (!response.ok) {
-            throw new Error('Erro ao adicionar item.');
+            return response.json().then(errorData => {
+                throw new Error(errorData.error || 'Erro ao adicionar item.');
+            });
         }
         loadItens();
     })
@@ -90,7 +92,9 @@ function editarItem(id, novoItem) {
     })
     .then(response => {
         if (!response.ok) {
-            throw new Error('Erro ao editar item.');
+            return response.json().then(errorData => {
+                throw new Error(errorData.error || 'Erro ao editar item.');
+            });
         }
         loadItens();
     })
@@ -105,7 +109,9 @@ function excluirItem(id) {
     })
     .then(response => {
         if (!response.ok) {
-            throw new Error('Erro ao excluir item.');
+            return response.json().then(errorData => {
+                throw new Error(errorData.error || 'Erro ao excluir item.');
+            });
         }
         loadItens();
     })
@@ -121,5 +127,5 @@ function setupAdicionarTelefoneButton() {
 }
 
 // Chamada para carregar os itens e configurar o botão
- loadItens();
- setupAdicionarTelefoneButton();
+loadItens();
+setupAdicionarTelefoneButton();

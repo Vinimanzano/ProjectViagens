@@ -1,14 +1,14 @@
-// controllers/hoteis.js
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
-//Create
+// Create
 const create = async (req, res) => {
     try {
         const data = req.body;
+
         // Verificar se id_destino está presente nos dados
         if (!data.id_destino) {
-            throw new Error("O campo id_destino é obrigatório.");
+            return res.status(400).json({ error: "O campo id_destino é obrigatório." });
         }
 
         // Convertendo avaliacao para string
@@ -21,7 +21,7 @@ const create = async (req, res) => {
                 avaliacao: data.avaliacao,
                 email: data.email,
                 site: data.site,
-                id_destino: parseInt(data.id_destino) // Adicione essa linha para definir o id_destino
+                id_destino: parseInt(data.id_destino) // Definindo o id_destino como número inteiro
             }
         });
         res.status(201).json(hotel);
@@ -31,7 +31,7 @@ const create = async (req, res) => {
     }
 };
 
-//READ
+// Read
 const read = async (req, res) => {
     try {
         const hoteis = await prisma.hoteis.findMany({
@@ -46,17 +46,29 @@ const read = async (req, res) => {
     }
 };
 
-//UPDATE
+// Update
 const update = async (req, res) => {
     try {
+        const id = parseInt(req.params.id); // Obtendo o id da rota
         const data = req.body;
-        // Convertendo o id_destino para número inteiro
-        data.id_destino = parseInt(data.id_destino);
+
+        // Convertendo o id_destino para número inteiro, se presente
+        if (data.id_destino) {
+            data.id_destino = parseInt(data.id_destino);
+        }
+
+        // Verificando se o hotel existe
+        const existingHotel = await prisma.hoteis.findUnique({
+            where: { id: id }
+        });
+
+        if (!existingHotel) {
+            return res.status(404).json({ error: "Hotel não encontrado" });
+        }
+
         const hotel = await prisma.hoteis.update({
-            where: {
-                id: 1
-            },
-            data: data // Usando os dados recebidos do corpo da requisição
+            where: { id: id },
+            data: data
         });
         res.status(200).json(hotel);
     } catch (error) {
@@ -65,31 +77,40 @@ const update = async (req, res) => {
     }
 };
 
-//DELETE
+// Delete
 const del = async (req, res) => {
-    const { id } = req.params;
     try {
-        const hoteis = await prisma.hoteis.findMany({
-            where: {
-                id_destino: parseInt(id)
-            }
-        });
-        if (hoteis.length > 0) {
-            return res.status(400).json({ error: "Não é possível excluir este destino, pois existem hotéis associados a ele." });
-        }
-        await prisma.destinos.delete({
-            where: {
-                id: parseInt(id)
-            }
+        const id = parseInt(req.params.id);
+
+        // Verificar se o hotel existe
+        const existingHotel = await prisma.hoteis.findUnique({
+            where: { id: id }
         });
 
-        res.status(200).json({ message: "Destino excluído com sucesso." });
+        if (!existingHotel) {
+            return res.status(404).json({ error: "Hotel não encontrado" });
+        }
+
+        // Verificar se há dependências (telefones) associadas ao hotel
+        const telefones = await prisma.telefones.findMany({
+            where: { id_hotel: id }
+        });
+
+        if (telefones.length > 0) {
+            return res.status(400).json({ error: "Não é possível excluir este hotel, pois existem telefones associados a ele." });
+        }
+
+        // Excluir o hotel
+        await prisma.hoteis.delete({
+            where: { id: id }
+        });
+
+        res.status(200).json({ message: "Hotel excluído com sucesso." });
     } catch (error) {
-        console.error("Erro ao excluir destino:", error);
+        console.error("Erro ao excluir hotel:", error);
         res.status(500).json({ error: "Erro interno do servidor" });
     }
 };
-
 
 module.exports = {
     create,
