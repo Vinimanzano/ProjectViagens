@@ -120,12 +120,10 @@ function excluirItem(id) {
     });
 }
 
-// Função para adicionar evento de clique ao botão "Adicionar Telefone"
 function setupAdicionarTelefoneButton() {
     const adicionarTelefoneBtn = document.getElementById('adicionarTelefoneBtn');
     adicionarTelefoneBtn.addEventListener('click', adicionarNovoTelefone);
 }
 
-// Chamada para carregar os itens e configurar o botão
 loadItens();
 setupAdicionarTelefoneButton();

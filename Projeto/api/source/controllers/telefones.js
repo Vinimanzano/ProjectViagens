@@ -5,12 +5,10 @@ const prisma = new PrismaClient();
 const create = async (req, res) => {
     const data = req.body;
     try {
-        // Verificar se id_hotel está presente nos dados
         if (!data.id_hotel) {
             return res.status(400).json({ error: "O campo id_hotel é obrigatório." });
         }
 
-        // Verificar se o hotel com id_hotel existe
         const hotelExists = await prisma.hoteis.findUnique({
             where: { id: data.id_hotel }
         });

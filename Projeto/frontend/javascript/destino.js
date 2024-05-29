@@ -69,7 +69,7 @@ async function editarItem(destinos, id, novoItem) {
         if (!response.ok) {
             throw new Error(`Erro ${response.status}: ${response.statusText} ao editar o item com ID ${id} em ${destinos}`);
         }
-        loadItens(); // Corrigido para recarregar os itens após a edição
+        loadItens();
     } catch (error) {
         console.error('Erro:', error);
     }
@@ -83,7 +83,7 @@ async function excluirItem(id) {
         if (!response.ok) {
             throw new Error(`Erro ${response.status}: ${response.statusText} ao excluir o item com ID ${id}`);
         }
-        loadItens(); // Corrigido para recarregar os itens após a exclusão
+        loadItens();
     } catch (error) {
         console.error('Erro:', error);
     }

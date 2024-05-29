@@ -5,7 +5,6 @@ function loadItens() {
     fetch(uri)
         .then(response => response.json())
         .then(data => {
-            // Limpa o array antes de adicionar os novos dados
             hoteis.length = 0;
             hoteis.push(...data);
             console.log(hoteis);
@@ -44,11 +43,11 @@ function displayData(hoteis, data) {
     });
 }
 
-function adicionarHotelForm() { // Remova o parâmetro hoteis
+function adicionarHotelForm() {
     const nome = document.getElementById("nomeHotel").value;
     const valor = document.getElementById("valorHotel").value;
     const avaliacaoInput = document.getElementById("AvaliacaoHotel").value;
-    const avaliacao = parseFloat(avaliacaoInput); // Converter para número
+    const avaliacao = parseFloat(avaliacaoInput);
 
     const email = document.getElementById("emailHotel").value;
     const site = document.getElementById("siteHotel").value;
@@ -69,10 +68,8 @@ function adicionarHotelForm() { // Remova o parâmetro hoteis
             }
             return response.json();
         })
-        .then(responseData => {
-            // Adicionar o novo hotel à array hoteis
+        .then(responseData => {         
             hoteis.push(responseData);
-            // Exibir os dados atualizados
             displayData('hoteis', hoteis);
         })
         .catch(error => {

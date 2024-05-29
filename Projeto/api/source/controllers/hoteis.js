@@ -6,12 +6,10 @@ const create = async (req, res) => {
     try {
         const data = req.body;
 
-        // Verificar se id_destino está presente nos dados
         if (!data.id_destino) {
             return res.status(400).json({ error: "O campo id_destino é obrigatório." });
         }
 
-        // Convertendo avaliacao para string
         data.avaliacao = String(data.avaliacao);
 
         const hotel = await prisma.hoteis.create({
@@ -21,7 +19,7 @@ const create = async (req, res) => {
                 avaliacao: data.avaliacao,
                 email: data.email,
                 site: data.site,
-                id_destino: parseInt(data.id_destino) // Definindo o id_destino como número inteiro
+                id_destino: parseInt(data.id_destino)
             }
         });
         res.status(201).json(hotel);
@@ -49,15 +47,13 @@ const read = async (req, res) => {
 // Update
 const update = async (req, res) => {
     try {
-        const id = parseInt(req.params.id); // Obtendo o id da rota
+        const id = parseInt(req.params.id);
         const data = req.body;
 
-        // Convertendo o id_destino para número inteiro, se presente
         if (data.id_destino) {
             data.id_destino = parseInt(data.id_destino);
         }
 
-        // Verificando se o hotel existe
         const existingHotel = await prisma.hoteis.findUnique({
             where: { id: id }
         });
@@ -82,7 +78,6 @@ const del = async (req, res) => {
     try {
         const id = parseInt(req.params.id);
 
-        // Verificar se o hotel existe
         const existingHotel = await prisma.hoteis.findUnique({
             where: { id: id }
         });
@@ -91,7 +86,6 @@ const del = async (req, res) => {
             return res.status(404).json({ error: "Hotel não encontrado" });
         }
 
-        // Verificar se há dependências (telefones) associadas ao hotel
         const telefones = await prisma.telefones.findMany({
             where: { id_hotel: id }
         });
@@ -100,7 +94,6 @@ const del = async (req, res) => {
             return res.status(400).json({ error: "Não é possível excluir este hotel, pois existem telefones associados a ele." });
         }
 
-        // Excluir o hotel
         await prisma.hoteis.delete({
             where: { id: id }
         });
