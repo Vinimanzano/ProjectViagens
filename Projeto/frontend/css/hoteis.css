@@ -17,10 +17,10 @@ body {
 header {
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 1rem 2rem; /* Adicionado padding para afastar os elementos das bordas */
+    padding: 1rem 2rem;
     display: flex;
-    justify-content: space-between; /* Alinha os itens do cabeçalho em cada extremidade */
-    align-items: center; /* Alinha verticalmente os itens */
+    justify-content: space-between;
+    align-items: center;
 }
 
 header img {
@@ -29,14 +29,14 @@ header img {
 }
 
 .btn-topo {
-    margin-left: auto; /* Move os menus para a direita */
+    margin-left: auto;
 }
 
 .btn-topo ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
-    display: flex; /* Alterado para flex para alinhar os itens na horizontal */
+    display: flex;
 }
 
 .btn-topo ul li {

@@ -17,10 +17,10 @@ body {
 header {
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 1rem 0;
+    padding: 1rem 2rem;
     display: flex;
-    justify-content: space-between; /* Alinha os itens dos cabeçalho em cada extremidade */
-    align-items: center; /* Alinha verticalmente os itens */
+    justify-content: space-between;
+    align-items: center;
 }
 
 header img {
@@ -29,17 +29,17 @@ header img {
 }
 
 .btn-topo {
-    margin-left: auto; /* Move os menus para a direita */
+    margin-left: auto;
 }
 
 .btn-topo ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
+    display: flex;
 }
 
 .btn-topo ul li {
-    display: inline-block;
     margin-right: 20px;
 }
 
@@ -59,7 +59,6 @@ header img {
 }
 
 main {
-    flex: 1;
     padding: 2rem 0;
 }
 
@@ -91,13 +90,6 @@ input[type="date"] {
     transition: border-color 0.3s ease;
 }
 
-input[type="text"]:focus,
-input[type="number"]:focus,
-input[type="date"]:focus {
-    outline: none;
-    border-color: #007bff;
-}
-
 button[type="submit"] {
     background-color: #007bff;
     color: #fff;
@@ -106,6 +98,8 @@ button[type="submit"] {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
 }
 
 button[type="submit"]:hover {
@@ -134,7 +128,7 @@ tbody tr:nth-child(even) {
     background-color: #f2f2f2;
 }
 
-td {
+tbody td {
     padding: 1rem;
     text-align: left;
 }
@@ -142,8 +136,11 @@ td {
 footer {
     background-color: #333;
     color: #fff;
-    padding: 20px 0;
     text-align: center;
+    padding: 1rem 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }
 
 footer div i{

@@ -1,7 +1,7 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
-// Create
+// CREATE
 const create = async (req, res) => {
     try {
         const data = req.body;
@@ -29,7 +29,7 @@ const create = async (req, res) => {
     }
 };
 
-// Read
+// READ
 const read = async (req, res) => {
     try {
         const hoteis = await prisma.hoteis.findMany({
@@ -44,7 +44,7 @@ const read = async (req, res) => {
     }
 };
 
-// Update
+// UPDATE
 const update = async (req, res) => {
     try {
         const id = parseInt(req.params.id);
@@ -73,7 +73,7 @@ const update = async (req, res) => {
     }
 };
 
-// Delete
+// DELETE
 const del = async (req, res) => {
     try {
         const id = parseInt(req.params.id);
